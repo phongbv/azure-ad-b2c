@@ -1,0 +1,924 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="{Settings:Tenant}.onmicrosoft.com"
+  PolicyId="B2C_1A_TrustFrameworkExtensions"
+  PublicPolicyUri="http://{Settings:Tenant}.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
+
+  <BasePolicy>
+    <TenantId>{Settings:Tenant}.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
+  </BasePolicy>
+
+  <BuildingBlocks>
+    <ClaimsSchema>
+
+      <!-- SECTION I: Claims required for user journeys to work properly -->
+
+      <!-- SECTION II: Claims required to pass on special parameters (including some query string parameters) to other claims providers -->
+
+      <!-- SECTION III: Additional claims that can be collected from the users, stored in the directory, and sent in the token. Add additional claims here. -->
+
+      <!-- For debugging custom policies on Application Insights -->
+      <ClaimType Id="correlationId">
+        <DisplayName>correlation ID</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
+
+      <!-- Add custom claims to match legacy iMIS SSO UI -->
+      <ClaimType Id="extension_prefix">
+        <DisplayName>Prefix</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Prefix</UserHelpText>
+        <UserInputType>DropdownSingleSelect</UserInputType>
+        <Restriction>
+          <Enumeration Text="(None)" Value="None" SelectByDefault="true" />
+          <Enumeration Text="Dr." Value="Dr." SelectByDefault="false" />
+          <Enumeration Text="Hon." Value="Hon." SelectByDefault="false" />
+          <Enumeration Text="Miss" Value="Miss" SelectByDefault="false" />
+          <Enumeration Text="Mr." Value="Mr." SelectByDefault="false" />
+          <Enumeration Text="Mrs." Value="Mrs." SelectByDefault="false" />
+          <Enumeration Text="Ms." Value="Ms." SelectByDefault="false" />
+          <Enumeration Text="Rev." Value="Rev." SelectByDefault="false" />
+        </Restriction>
+      </ClaimType>
+
+      <ClaimType Id="extension_suffix">
+        <DisplayName>Suffix</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Suffix</UserHelpText>
+        <UserInputType>DropdownSingleSelect</UserInputType>
+        <Restriction>
+          <Enumeration Text="(None)" Value="None" SelectByDefault="true" />
+          <Enumeration Text="3rd" Value="3rd" SelectByDefault="false" />
+          <Enumeration Text="CAE" Value="CAE" SelectByDefault="false" />
+          <Enumeration Text="Esq." Value="Esq." SelectByDefault="false" />
+          <Enumeration Text="II" Value="II" SelectByDefault="false" />
+          <Enumeration Text="III" Value="III" SelectByDefault="false" />
+          <Enumeration Text="Ing." Value="Ing." SelectByDefault="false" />
+          <Enumeration Text="IV" Value="IV" SelectByDefault="false" />
+          <Enumeration Text="Jr." Value="Jr." SelectByDefault="false" />
+          <Enumeration Text="P.E." Value="P.E." SelectByDefault="false" />
+          <Enumeration Text="PhD" Value="PhD" SelectByDefault="false" />
+          <Enumeration Text="Sr." Value="Sr." SelectByDefault="false" />
+          <Enumeration Text="V" Value="V" SelectByDefault="false" />
+        </Restriction>
+      </ClaimType>
+
+      <ClaimType Id="extension_middleName">
+        <DisplayName>Middle name</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Middle name</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+
+      <ClaimType Id="extension_Organization">
+        <DisplayName>Enter an organization</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Your organization name</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+
+      <ClaimType Id="extension_country">
+        <DisplayName>Country</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Country</UserHelpText>
+        <UserInputType>DropdownSingleSelect</UserInputType>
+        <Restriction>
+          <Enumeration Value="(None)" Text="(None)" SelectByDefault="false" />
+          <Enumeration Value="AF" Text="Afghanistan" SelectByDefault="false" />
+          <Enumeration Value="AX" Text="Aland Islands" SelectByDefault="false" />
+          <Enumeration Value="AL" Text="Albania" SelectByDefault="false" />
+          <Enumeration Value="DZ" Text="Algeria" SelectByDefault="false" />
+          <Enumeration Value="AS" Text="American Samoa" SelectByDefault="false" />
+          <Enumeration Value="AD" Text="Andorra" SelectByDefault="false" />
+          <Enumeration Value="AO" Text="Angola" SelectByDefault="false" />
+          <Enumeration Value="AI" Text="Anguilla" SelectByDefault="false" />
+          <Enumeration Value="AQ" Text="Antarctica" SelectByDefault="false" />
+          <Enumeration Value="Antigua" Text="Antigua" SelectByDefault="false" />
+          <Enumeration Value="AG" Text="Antigua and Barbuda" SelectByDefault="false" />
+          <Enumeration Value="AR" Text="Argentina" SelectByDefault="false" />
+          <Enumeration Value="AM" Text="Armenia" SelectByDefault="false" />
+          <Enumeration Value="AW" Text="Aruba" SelectByDefault="false" />
+          <Enumeration Value="Ascension Isle" Text="Ascension Isle" SelectByDefault="false" />
+          <Enumeration Value="AU" Text="Australia" SelectByDefault="false" />
+          <Enumeration Value="AT" Text="Austria" SelectByDefault="false" />
+          <Enumeration Value="AZ" Text="Azerbaijan" SelectByDefault="false" />
+          <Enumeration Value="Azores" Text="Azores" SelectByDefault="false" />
+          <Enumeration Value="BS" Text="Bahamas" SelectByDefault="false" />
+          <Enumeration Value="BH" Text="Bahrain" SelectByDefault="false" />
+          <Enumeration Value="BD" Text="Bangladesh" SelectByDefault="false" />
+          <Enumeration Value="BB" Text="Barbados" SelectByDefault="false" />
+          <Enumeration Value="Belarua" Text="Belarua" SelectByDefault="false" />
+          <Enumeration Value="BY" Text="Belarus" SelectByDefault="false" />
+          <Enumeration Value="BE" Text="Belgium" SelectByDefault="false" />
+          <Enumeration Value="BZ" Text="Belize" SelectByDefault="false" />
+          <Enumeration Value="BJ" Text="Benin" SelectByDefault="false" />
+          <Enumeration Value="BM" Text="Bermuda" SelectByDefault="false" />
+          <Enumeration Value="BT" Text="Bhutan" SelectByDefault="false" />
+          <Enumeration Value="BO" Text="Bolivia" SelectByDefault="false" />
+          <Enumeration Value="BA" Text="Bosnia and Herzegovina" SelectByDefault="false" />
+          <Enumeration Value="Bosnia/Herzegovina" Text="Bosnia/Herzegovina" SelectByDefault="false" />
+          <Enumeration Value="BW" Text="Botswana" SelectByDefault="false" />
+          <Enumeration Value="BV" Text="Bouvet Island" SelectByDefault="false" />
+          <Enumeration Value="BR" Text="Brazil" SelectByDefault="false" />
+          <Enumeration Value="IO" Text="British Indian Ocean Terr" SelectByDefault="false" />
+          <Enumeration Value="British Virgin Isl." Text="British Virgin Isl." SelectByDefault="false" />
+          <Enumeration Value="Brunei" Text="Brunei" SelectByDefault="false" />
+          <Enumeration Value="BN" Text="Brunei Darussalam" SelectByDefault="false" />
+          <Enumeration Value="BG" Text="Bulgaria" SelectByDefault="false" />
+          <Enumeration Value="BF" Text="Burkina Faso" SelectByDefault="false" />
+          <Enumeration Value="Burma" Text="Burma" SelectByDefault="false" />
+          <Enumeration Value="BI" Text="Burundi" SelectByDefault="false" />
+          <Enumeration Value="CV" Text="Cabo Verde" SelectByDefault="false" />
+          <Enumeration Value="KH" Text="Cambodia" SelectByDefault="false" />
+          <Enumeration Value="CM" Text="Cameroon" SelectByDefault="false" />
+          <Enumeration Value="CA" Text="Canada" SelectByDefault="false" />
+          <Enumeration Value="KY" Text="Cayman Islands" SelectByDefault="false" />
+          <Enumeration Value="Central African Rep" Text="Central African Rep" SelectByDefault="false" />
+          <Enumeration Value="CF" Text="Central African Republic" SelectByDefault="false" />
+          <Enumeration Value="TD" Text="Chad" SelectByDefault="false" />
+          <Enumeration Value="CL" Text="Chile" SelectByDefault="false" />
+          <Enumeration Value="CN" Text="China" SelectByDefault="false" />
+          <Enumeration Value="CX" Text="Christmas Island" SelectByDefault="false" />
+          <Enumeration Value="CC" Text="Cocos (Keeling) Islands" SelectByDefault="false" />
+          <Enumeration Value="CO" Text="Colombia" SelectByDefault="false" />
+          <Enumeration Value="KM" Text="Comoros" SelectByDefault="false" />
+          <Enumeration Value="CG" Text="Congo" SelectByDefault="false" />
+          <Enumeration Value="CD" Text="Congo, The Dem Rep Of The" SelectByDefault="false" />
+          <Enumeration Value="CK" Text="Cook Islands" SelectByDefault="false" />
+          <Enumeration Value="Corsica" Text="Corsica" SelectByDefault="false" />
+          <Enumeration Value="CR" Text="Costa Rica" SelectByDefault="false" />
+          <Enumeration Value="CI" Text="Cote d'Ivoire" SelectByDefault="false" />
+          <Enumeration Value="HR" Text="Croatia" SelectByDefault="false" />
+          <Enumeration Value="CU" Text="Cuba" SelectByDefault="false" />
+          <Enumeration Value="CY" Text="Cyprus" SelectByDefault="false" />
+          <Enumeration Value="CZ" Text="Czech Republic" SelectByDefault="false" />
+          <Enumeration Value="DK" Text="Denmark" SelectByDefault="false" />
+          <Enumeration Value="Diego Garcia" Text="Diego Garcia" SelectByDefault="false" />
+          <Enumeration Value="DJ" Text="Djibouti" SelectByDefault="false" />
+          <Enumeration Value="DM" Text="Dominica" SelectByDefault="false" />
+          <Enumeration Value="DO" Text="Dominican Republic" SelectByDefault="false" />
+          <Enumeration Value="East Timor" Text="East Timor" SelectByDefault="false" />
+          <Enumeration Value="EC" Text="Ecuador" SelectByDefault="false" />
+          <Enumeration Value="EG" Text="Egypt" SelectByDefault="false" />
+          <Enumeration Value="SV" Text="El Salvador" SelectByDefault="false" />
+          <Enumeration Value="GQ" Text="Equatorial Guinea" SelectByDefault="false" />
+          <Enumeration Value="ER" Text="Eritrea" SelectByDefault="false" />
+          <Enumeration Value="EE" Text="Estonia" SelectByDefault="false" />
+          <Enumeration Value="ET" Text="Ethiopia" SelectByDefault="false" />
+          <Enumeration Value="FK" Text="Falkland Is (Malvinas)" SelectByDefault="false" />
+          <Enumeration Value="Falkland Islands" Text="Falkland Islands" SelectByDefault="false" />
+          <Enumeration Value="FO" Text="Faroe Islands" SelectByDefault="false" />
+          <Enumeration Value="FJ" Text="Fiji" SelectByDefault="false" />
+          <Enumeration Value="FI" Text="Finland" SelectByDefault="false" />
+          <Enumeration Value="FR" Text="France" SelectByDefault="false" />
+          <Enumeration Value="French Antilles" Text="French Antilles" SelectByDefault="false" />
+          <Enumeration Value="GF" Text="French Guiana" SelectByDefault="false" />
+          <Enumeration Value="PF" Text="French Polynesia" SelectByDefault="false" />
+          <Enumeration Value="TF" Text="French Southern Terr" SelectByDefault="false" />
+          <Enumeration Value="GA" Text="Gabon" SelectByDefault="false" />
+          <Enumeration Value="GM" Text="Gambia" SelectByDefault="false" />
+          <Enumeration Value="GE" Text="Georgia" SelectByDefault="false" />
+          <Enumeration Value="DE" Text="Germany" SelectByDefault="false" />
+          <Enumeration Value="GH" Text="Ghana" SelectByDefault="false" />
+          <Enumeration Value="GI" Text="Gibraltar" SelectByDefault="false" />
+          <Enumeration Value="GR" Text="Greece" SelectByDefault="false" />
+          <Enumeration Value="GL" Text="Greenland" SelectByDefault="false" />
+          <Enumeration Value="GD" Text="Grenada" SelectByDefault="false" />
+          <Enumeration Value="GP" Text="Guadeloupe" SelectByDefault="false" />
+          <Enumeration Value="GU" Text="Guam" SelectByDefault="false" />
+          <Enumeration Value="Guantanamo Bay" Text="Guantanamo Bay" SelectByDefault="false" />
+          <Enumeration Value="GT" Text="Guatemala" SelectByDefault="false" />
+          <Enumeration Value="GN" Text="Guinea" SelectByDefault="false" />
+          <Enumeration Value="GW" Text="Guinea-Bissau" SelectByDefault="false" />
+          <Enumeration Value="GY" Text="Guyana" SelectByDefault="false" />
+          <Enumeration Value="HT" Text="Haiti" SelectByDefault="false" />
+          <Enumeration Value="HM" Text="Heard Is and McDonald Is" SelectByDefault="false" />
+          <Enumeration Value="VA" Text="Holy See (Vatican City)" SelectByDefault="false" />
+          <Enumeration Value="HN" Text="Honduras" SelectByDefault="false" />
+          <Enumeration Value="HK" Text="Hong Kong" SelectByDefault="false" />
+          <Enumeration Value="HU" Text="Hungary" SelectByDefault="false" />
+          <Enumeration Value="IS" Text="Iceland" SelectByDefault="false" />
+          <Enumeration Value="IN" Text="India" SelectByDefault="false" />
+          <Enumeration Value="ID" Text="Indonesia" SelectByDefault="false" />
+          <Enumeration Value="Iran" Text="Iran" SelectByDefault="false" />
+          <Enumeration Value="IR" Text="Iran, Islamic Republic of" SelectByDefault="false" />
+          <Enumeration Value="IQ" Text="Iraq" SelectByDefault="false" />
+          <Enumeration Value="Iraq-saudi Arabia Ne" Text="Iraq-saudi Arabia Ne" SelectByDefault="false" />
+          <Enumeration Value="IE" Text="Ireland" SelectByDefault="false" />
+          <Enumeration Value="IL" Text="Israel" SelectByDefault="false" />
+          <Enumeration Value="IT" Text="Italy" SelectByDefault="false" />
+          <Enumeration Value="Ivory Coast" Text="Ivory Coast" SelectByDefault="false" />
+          <Enumeration Value="JM" Text="Jamaica" SelectByDefault="false" />
+          <Enumeration Value="JP" Text="Japan" SelectByDefault="false" />
+          <Enumeration Value="JO" Text="Jordan" SelectByDefault="false" />
+          <Enumeration Value="Kampuchea" Text="Kampuchea" SelectByDefault="false" />
+          <Enumeration Value="KZ" Text="Kazakhstan" SelectByDefault="false" />
+          <Enumeration Value="KE" Text="Kenya" SelectByDefault="false" />
+          <Enumeration Value="KI" Text="Kiribati" SelectByDefault="false" />
+          <Enumeration Value="KP" Text="Korea, Dem People's Rep" SelectByDefault="false" />
+          <Enumeration Value="KR" Text="Korea, Republic Of" SelectByDefault="false" />
+          <Enumeration Value="KW" Text="Kuwait" SelectByDefault="false" />
+          <Enumeration Value="KG" Text="Kyrgyzstan" SelectByDefault="false" />
+          <Enumeration Value="LA" Text="Lao People's Dem Republic" SelectByDefault="false" />
+          <Enumeration Value="Laos" Text="Laos" SelectByDefault="false" />
+          <Enumeration Value="LV" Text="Latvia" SelectByDefault="false" />
+          <Enumeration Value="LB" Text="Lebanon" SelectByDefault="false" />
+          <Enumeration Value="LS" Text="Lesotho" SelectByDefault="false" />
+          <Enumeration Value="LR" Text="Liberia" SelectByDefault="false" />
+          <Enumeration Value="LY" Text="Libya" SelectByDefault="false" />
+          <Enumeration Value="LI" Text="Liechtenstein" SelectByDefault="false" />
+          <Enumeration Value="LT" Text="Lithuania" SelectByDefault="false" />
+          <Enumeration Value="LU" Text="Luxembourg" SelectByDefault="false" />
+          <Enumeration Value="MO" Text="Macao" SelectByDefault="false" />
+          <Enumeration Value="MK" Text="Macedonia" SelectByDefault="false" />
+          <Enumeration Value="MG" Text="Madagascar" SelectByDefault="false" />
+          <Enumeration Value="Maderia Islands" Text="Maderia Islands" SelectByDefault="false" />
+          <Enumeration Value="MW" Text="Malawi" SelectByDefault="false" />
+          <Enumeration Value="MY" Text="Malaysia" SelectByDefault="false" />
+          <Enumeration Value="MV" Text="Maldives" SelectByDefault="false" />
+          <Enumeration Value="ML" Text="Mali" SelectByDefault="false" />
+          <Enumeration Value="MT" Text="Malta" SelectByDefault="false" />
+          <Enumeration Value="MH" Text="Marshall Islands" SelectByDefault="false" />
+          <Enumeration Value="MQ" Text="Martinique" SelectByDefault="false" />
+          <Enumeration Value="MR" Text="Mauritania" SelectByDefault="false" />
+          <Enumeration Value="MU" Text="Mauritius" SelectByDefault="false" />
+          <Enumeration Value="YT" Text="Mayotte" SelectByDefault="false" />
+          <Enumeration Value="Mayotte Islands" Text="Mayotte Islands" SelectByDefault="false" />
+          <Enumeration Value="MX" Text="Mexico" SelectByDefault="false" />
+          <Enumeration Value="Micronesia" Text="Micronesia" SelectByDefault="false" />
+          <Enumeration Value="FM" Text="Micronesia, Fed States Of" SelectByDefault="false" />
+          <Enumeration Value="Moldova" Text="Moldova" SelectByDefault="false" />
+          <Enumeration Value="MC" Text="Monaco" SelectByDefault="false" />
+          <Enumeration Value="MN" Text="Mongolia" SelectByDefault="false" />
+          <Enumeration Value="Monsterrat" Text="Monsterrat" SelectByDefault="false" />
+          <Enumeration Value="Montenegro" Text="Montenegro" SelectByDefault="false" />
+          <Enumeration Value="MS" Text="Montserrat" SelectByDefault="false" />
+          <Enumeration Value="MA" Text="Morocco" SelectByDefault="false" />
+          <Enumeration Value="MZ" Text="Mozambique" SelectByDefault="false" />
+          <Enumeration Value="MM" Text="Myanmar" SelectByDefault="false" />
+          <Enumeration Value="NA" Text="Namibia" SelectByDefault="false" />
+          <Enumeration Value="NR" Text="Nauru" SelectByDefault="false" />
+          <Enumeration Value="NP" Text="Nepal" SelectByDefault="false" />
+          <Enumeration Value="NL" Text="Netherlands" SelectByDefault="false" />
+          <Enumeration Value="AN" Text="Netherlands Antilles" SelectByDefault="false" />
+          <Enumeration Value="Nevis" Text="Nevis" SelectByDefault="false" />
+          <Enumeration Value="NC" Text="New Caledonia" SelectByDefault="false" />
+          <Enumeration Value="NZ" Text="New Zealand" SelectByDefault="false" />
+          <Enumeration Value="NI" Text="Nicaragua" SelectByDefault="false" />
+          <Enumeration Value="NE" Text="Niger" SelectByDefault="false" />
+          <Enumeration Value="NG" Text="Nigeria" SelectByDefault="false" />
+          <Enumeration Value="NU" Text="Niue" SelectByDefault="false" />
+          <Enumeration Value="NF" Text="Norfolk Island" SelectByDefault="false" />
+          <Enumeration Value="North Korea" Text="North Korea" SelectByDefault="false" />
+          <Enumeration Value="MP" Text="Northern Mariana Islands" SelectByDefault="false" />
+          <Enumeration Value="NO" Text="Norway" SelectByDefault="false" />
+          <Enumeration Value="OM" Text="Oman" SelectByDefault="false" />
+          <Enumeration Value="PK" Text="Pakistan" SelectByDefault="false" />
+          <Enumeration Value="PW" Text="Palau" SelectByDefault="false" />
+          <Enumeration Value="PS" Text="Palestine" SelectByDefault="false" />
+          <Enumeration Value="PA" Text="Panama" SelectByDefault="false" />
+          <Enumeration Value="PG" Text="Papua New Guinea" SelectByDefault="false" />
+          <Enumeration Value="PY" Text="Paraguay" SelectByDefault="false" />
+          <Enumeration Value="PE" Text="Peru" SelectByDefault="false" />
+          <Enumeration Value="PH" Text="Philippines" SelectByDefault="false" />
+          <Enumeration Value="PN" Text="Pitcairn" SelectByDefault="false" />
+          <Enumeration Value="Pitcairn Island" Text="Pitcairn Island" SelectByDefault="false" />
+          <Enumeration Value="PL" Text="Poland" SelectByDefault="false" />
+          <Enumeration Value="PT" Text="Portugal" SelectByDefault="false" />
+          <Enumeration Value="PR" Text="Puerto Rico" SelectByDefault="false" />
+          <Enumeration Value="QA" Text="Qatar" SelectByDefault="false" />
+          <Enumeration Value="MD" Text="Republic of Moldova" SelectByDefault="false" />
+          <Enumeration Value="RE" Text="Reunion" SelectByDefault="false" />
+          <Enumeration Value="RO" Text="Romania" SelectByDefault="false" />
+          <Enumeration Value="RU" Text="Russia" SelectByDefault="false" />
+          <Enumeration Value="RW" Text="Rwanda" SelectByDefault="false" />
+          <Enumeration Value="SH" Text="Saint Helena" SelectByDefault="false" />
+          <Enumeration Value="KN" Text="Saint Kitts and Nevis" SelectByDefault="false" />
+          <Enumeration Value="LC" Text="Saint Lucia" SelectByDefault="false" />
+          <Enumeration Value="PM" Text="Saint Pierre and Miquelon" SelectByDefault="false" />
+          <Enumeration Value="Saipan" Text="Saipan" SelectByDefault="false" />
+          <Enumeration Value="WS" Text="Samoa" SelectByDefault="false" />
+          <Enumeration Value="SM" Text="San Marino" SelectByDefault="false" />
+          <Enumeration Value="Sao Tome &amp; Principe" Text="Sao Tome &amp; Principe" SelectByDefault="false" />
+          <Enumeration Value="ST" Text="Sao Tome and Principe" SelectByDefault="false" />
+          <Enumeration Value="SA" Text="Saudi Arabia" SelectByDefault="false" />
+          <Enumeration Value="SN" Text="Senegal" SelectByDefault="false" />
+          <Enumeration Value="Serbia" Text="Serbia" SelectByDefault="false" />
+          <Enumeration Value="CS" Text="Serbia and Montenegro" SelectByDefault="false" />
+          <Enumeration Value="SC" Text="Seychelles" SelectByDefault="false" />
+          <Enumeration Value="SL" Text="Sierra Leone" SelectByDefault="false" />
+          <Enumeration Value="SG" Text="Singapore" SelectByDefault="false" />
+          <Enumeration Value="SK" Text="Slovakia" SelectByDefault="false" />
+          <Enumeration Value="SI" Text="Slovenia" SelectByDefault="false" />
+          <Enumeration Value="Soloman Islands" Text="Soloman Islands" SelectByDefault="false" />
+          <Enumeration Value="SB" Text="Solomon Islands" SelectByDefault="false" />
+          <Enumeration Value="SO" Text="Somalia" SelectByDefault="false" />
+          <Enumeration Value="ZA" Text="South Africa" SelectByDefault="false" />
+          <Enumeration Value="GS" Text="South Georgia and the SSI" SelectByDefault="false" />
+          <Enumeration Value="KS" Text="South Korea" SelectByDefault="false" />
+          <Enumeration Value="ES" Text="Spain" SelectByDefault="false" />
+          <Enumeration Value="LK" Text="Sri Lanka" SelectByDefault="false" />
+          <Enumeration Value="St Christopher Nevis" Text="St Christopher Nevis" SelectByDefault="false" />
+          <Enumeration Value="St Pierre &amp; Miquelon" Text="St Pierre &amp; Miquelon" SelectByDefault="false" />
+          <Enumeration Value="VC" Text="St Vincent and Grenadines" SelectByDefault="false" />
+          <Enumeration Value="St Vincent/Grenadine" Text="St Vincent/Grenadine" SelectByDefault="false" />
+          <Enumeration Value="St. Helena" Text="St. Helena" SelectByDefault="false" />
+          <Enumeration Value="St. Kitts" Text="St. Kitts" SelectByDefault="false" />
+          <Enumeration Value="St. Lucia" Text="St. Lucia" SelectByDefault="false" />
+          <Enumeration Value="SD" Text="Sudan" SelectByDefault="false" />
+          <Enumeration Value="SR" Text="Suriname" SelectByDefault="false" />
+          <Enumeration Value="SJ" Text="Svalbard and Jan Mayen" SelectByDefault="false" />
+          <Enumeration Value="SZ" Text="Swaziland" SelectByDefault="false" />
+          <Enumeration Value="SE" Text="Sweden" SelectByDefault="false" />
+          <Enumeration Value="CH" Text="Switzerland" SelectByDefault="false" />
+          <Enumeration Value="SY" Text="Syria" SelectByDefault="false" />
+          <Enumeration Value="TW" Text="Taiwan" SelectByDefault="false" />
+          <Enumeration Value="TJ" Text="Tajikistan" SelectByDefault="false" />
+          <Enumeration Value="Tanzania" Text="Tanzania" SelectByDefault="false" />
+          <Enumeration Value="Test" Text="Test" SelectByDefault="false" />
+          <Enumeration Value="TH" Text="Thailand" SelectByDefault="false" />
+          <Enumeration Value="TL" Text="Timor-Leste" SelectByDefault="false" />
+          <Enumeration Value="TG" Text="Togo" SelectByDefault="false" />
+          <Enumeration Value="TK" Text="Tokelau" SelectByDefault="false" />
+          <Enumeration Value="TO" Text="Tonga" SelectByDefault="false" />
+          <Enumeration Value="Trinidad" Text="Trinidad" SelectByDefault="false" />
+          <Enumeration Value="TT" Text="Trinidad and Tobago" SelectByDefault="false" />
+          <Enumeration Value="Tristan Da Chuna" Text="Tristan Da Chuna" SelectByDefault="false" />
+          <Enumeration Value="TN" Text="Tunisia" SelectByDefault="false" />
+          <Enumeration Value="TR" Text="Turkey" SelectByDefault="false" />
+          <Enumeration Value="TM" Text="Turkmenistan" SelectByDefault="false" />
+          <Enumeration Value="Turks &amp; Caicos Isl." Text="Turks &amp; Caicos Isl." SelectByDefault="false" />
+          <Enumeration Value="TC" Text="Turks and Caicos Islands" SelectByDefault="false" />
+          <Enumeration Value="TV" Text="Tuvalu" SelectByDefault="false" />
+          <Enumeration Value="UG" Text="Uganda" SelectByDefault="false" />
+          <Enumeration Value="UA" Text="Ukraine" SelectByDefault="false" />
+          <Enumeration Value="AE" Text="United Arab Emirates" SelectByDefault="false" />
+          <Enumeration Value="GB" Text="United Kingdom" SelectByDefault="false" />
+          <Enumeration Value="TZ" Text="United Rep of Tanzania" SelectByDefault="false" />
+          <Enumeration Value="US" Text="United States" SelectByDefault="false" />
+          <Enumeration Value="Upper Volta" Text="Upper Volta" SelectByDefault="false" />
+          <Enumeration Value="UY" Text="Uruguay" SelectByDefault="false" />
+          <Enumeration Value="UM" Text="US Minor Outlying Islands" SelectByDefault="false" />
+          <Enumeration Value="UZ" Text="Uzbekistan" SelectByDefault="false" />
+          <Enumeration Value="VU" Text="Vanuatu" SelectByDefault="false" />
+          <Enumeration Value="Vatican City" Text="Vatican City" SelectByDefault="false" />
+          <Enumeration Value="VE" Text="Venezuela" SelectByDefault="false" />
+          <Enumeration Value="Vietnam" Text="Vietnam" SelectByDefault="false" />
+          <Enumeration Value="VG" Text="Virgin Islands, British" SelectByDefault="false" />
+          <Enumeration Value="VI" Text="Virgin Islands, US" SelectByDefault="false" />
+          <Enumeration Value="Wallis &amp; Futuna Isl." Text="Wallis &amp; Futuna Isl." SelectByDefault="false" />
+          <Enumeration Value="WF" Text="Wallis and Futuna" SelectByDefault="false" />
+          <Enumeration Value="EH" Text="Western Sahara" SelectByDefault="false" />
+          <Enumeration Value="Western Samoa" Text="Western Samoa" SelectByDefault="false" />
+          <Enumeration Value="YE" Text="Yemen" SelectByDefault="false" />
+          <Enumeration Value="Yemen, Peoples D.r." Text="Yemen, Peoples D.r." SelectByDefault="false" />
+          <Enumeration Value="YU" Text="Yugoslavia" SelectByDefault="false" />
+          <Enumeration Value="Zaire" Text="Zaire" SelectByDefault="false" />
+          <Enumeration Value="ZM" Text="Zambia" SelectByDefault="false" />
+          <Enumeration Value="ZW" Text="Zimbabwe" SelectByDefault="false" />
+        </Restriction>
+      </ClaimType>
+
+      <ClaimType Id="extension_addressLine1">
+        <DisplayName>Address Line 1</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Address line 1</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+
+      <ClaimType Id="extension_addressLine2">
+        <DisplayName>Address Line 2</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Address line 2</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+
+      <ClaimType Id="extension_addressLine3">
+        <DisplayName>Address Line 3</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Address line 3</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+
+      <ClaimType Id="extension_city">
+        <DisplayName>City</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>City</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+
+      <ClaimType Id="extension_state">
+        <DisplayName>State</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>State (Optional, specify if you selected USA as your country)</UserHelpText>
+        <UserInputType>DropdownSingleSelect</UserInputType>
+        <Restriction>
+          <Enumeration Value="(None)" Text="(None)" SelectByDefault="true" />
+          <Enumeration Value="AL" Text="Alabama" SelectByDefault="false" />
+          <Enumeration Value="AK" Text="Alaska" SelectByDefault="false" />
+          <Enumeration Value="AS" Text="American Samoa" SelectByDefault="false" />
+          <Enumeration Value="AZ" Text="Arizona" SelectByDefault="false" />
+          <Enumeration Value="AR" Text="Arkansas" SelectByDefault="false" />
+          <Enumeration Value="AE" Text="Armed Forces Africa, Can..." SelectByDefault="false" />
+          <Enumeration Value="AA" Text="Armed Forces Americas" SelectByDefault="false" />
+          <Enumeration Value="AP" Text="Armed Forces Pacific" SelectByDefault="false" />
+          <Enumeration Value="CA" Text="California" SelectByDefault="false" />
+          <Enumeration Value="CO" Text="Colorado" SelectByDefault="false" />
+          <Enumeration Value="CT" Text="Connecticut" SelectByDefault="false" />
+          <Enumeration Value="DE" Text="Delaware" SelectByDefault="false" />
+          <Enumeration Value="DC" Text="District of Columbia" SelectByDefault="false" />
+          <Enumeration Value="FM" Text="Federated States of Micr..." SelectByDefault="false" />
+          <Enumeration Value="FL" Text="Florida" SelectByDefault="false" />
+          <Enumeration Value="GA" Text="Georgia" SelectByDefault="false" />
+          <Enumeration Value="GU" Text="Guam" SelectByDefault="false" />
+          <Enumeration Value="HI" Text="Hawaii" SelectByDefault="false" />
+          <Enumeration Value="ID" Text="Idaho" SelectByDefault="false" />
+          <Enumeration Value="IL" Text="Illinois" SelectByDefault="false" />
+          <Enumeration Value="IN" Text="Indiana" SelectByDefault="false" />
+          <Enumeration Value="IA" Text="Iowa" SelectByDefault="false" />
+          <Enumeration Value="KS" Text="Kansas" SelectByDefault="false" />
+          <Enumeration Value="KY" Text="Kentucky" SelectByDefault="false" />
+          <Enumeration Value="LA" Text="Louisiana" SelectByDefault="false" />
+          <Enumeration Value="ME" Text="Maine" SelectByDefault="false" />
+          <Enumeration Value="MH" Text="Marshall Islands" SelectByDefault="false" />
+          <Enumeration Value="MD" Text="Maryland" SelectByDefault="false" />
+          <Enumeration Value="MA" Text="Massachusetts" SelectByDefault="false" />
+          <Enumeration Value="MI" Text="Michigan" SelectByDefault="false" />
+          <Enumeration Value="MN" Text="Minnesota" SelectByDefault="false" />
+          <Enumeration Value="MS" Text="Mississippi" SelectByDefault="false" />
+          <Enumeration Value="MO" Text="Missouri" SelectByDefault="false" />
+          <Enumeration Value="MT" Text="Montana" SelectByDefault="false" />
+          <Enumeration Value="NE" Text="Nebraska" SelectByDefault="false" />
+          <Enumeration Value="NV" Text="Nevada" SelectByDefault="false" />
+          <Enumeration Value="NH" Text="New Hampshire" SelectByDefault="false" />
+          <Enumeration Value="NJ" Text="New Jersey" SelectByDefault="false" />
+          <Enumeration Value="NM" Text="New Mexico" SelectByDefault="false" />
+          <Enumeration Value="NY" Text="New York" SelectByDefault="false" />
+          <Enumeration Value="NC" Text="North Carolina" SelectByDefault="false" />
+          <Enumeration Value="ND" Text="North Dakota" SelectByDefault="false" />
+          <Enumeration Value="MP" Text="Northern Mariana Islands" SelectByDefault="false" />
+          <Enumeration Value="OH" Text="Ohio" SelectByDefault="false" />
+          <Enumeration Value="OK" Text="Oklahoma" SelectByDefault="false" />
+          <Enumeration Value="OR" Text="Oregon" SelectByDefault="false" />
+          <Enumeration Value="PW" Text="Palau" SelectByDefault="false" />
+          <Enumeration Value="PA" Text="Pennsylvania" SelectByDefault="false" />
+          <Enumeration Value="PR" Text="Puerto Rico" SelectByDefault="false" />
+          <Enumeration Value="RI" Text="Rhode Island" SelectByDefault="false" />
+          <Enumeration Value="SC" Text="South Carolina" SelectByDefault="false" />
+          <Enumeration Value="SD" Text="South Dakota" SelectByDefault="false" />
+          <Enumeration Value="TN" Text="Tennessee" SelectByDefault="false" />
+          <Enumeration Value="TX" Text="Texas" SelectByDefault="false" />
+          <Enumeration Value="UT" Text="Utah" SelectByDefault="false" />
+          <Enumeration Value="VT" Text="Vermont" SelectByDefault="false" />
+          <Enumeration Value="VI" Text="Virgin Islands" SelectByDefault="false" />
+          <Enumeration Value="VA" Text="Virginia" SelectByDefault="false" />
+          <Enumeration Value="WA" Text="Washington" SelectByDefault="false" />
+          <Enumeration Value="WV" Text="West Virginia" SelectByDefault="false" />
+          <Enumeration Value="WI" Text="Wisconsin" SelectByDefault="false" />
+          <Enumeration Value="WY" Text="Wyoming" SelectByDefault="false" />
+        </Restriction>
+      </ClaimType>
+
+      <ClaimType Id="extension_postalCode">
+        <DisplayName>Postal code</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Postal code</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+
+      <ClaimType Id="extension_userName">
+        <DisplayName>User name</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Add help text here</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+
+    </ClaimsSchema>
+
+    <ContentDefinitions>
+
+      <ContentDefinition Id="api.idpselections">
+        <LoadUri>{Settings:CustomUIIdpSelector}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.idpselections.signup">
+        <LoadUri>{Settings:CustomUIIdpSelector}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.signuporsignin">
+        <LoadUri>{Settings:CustomUIUnified}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.phonefactor">
+        <LoadUri>{Settings:CustomUIMultiFactor}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.selfasserted">
+        <LoadUri>{Settings:CustomUISelfAsserted}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.selfasserted.profileupdate">
+        <LoadUri>{Settings:CustomUISelfAsserted}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.localaccountsignup">
+        <LoadUri>{Settings:CustomUISelfAsserted}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.localaccountpasswordreset">
+        <LoadUri>{Settings:CustomUISelfAsserted}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.socialccountsignup">
+        <LoadUri>{Settings:CustomUISelfAsserted}</LoadUri>
+      </ContentDefinition>
+
+      <ContentDefinition Id="api.localaccountsignin">
+        <LoadUri>{Settings:CustomUISelfAsserted}</LoadUri>
+      </ContentDefinition>
+
+    </ContentDefinitions>
+
+  </BuildingBlocks>
+
+  <ClaimsProviders>
+
+    <ClaimsProvider>
+      <DisplayName>Facebook</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Facebook-OAUTH">
+          <Metadata>
+            <Item Key="client_id">{Settings:FacebookAppId}</Item>
+            <Item Key="scope">email public_profile</Item>
+            <Item Key="ClaimsEndpoint">https://graph.facebook.com/me?fields=id,first_name,last_name,name,email</Item>
+          </Metadata>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <Domain>google.com</Domain>
+      <DisplayName>Google</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Google-OAuth2">
+          <DisplayName>Google</DisplayName>
+          <Protocol Name="OAuth2" />
+          <Metadata>
+            <Item Key="ProviderName">google</Item>
+            <Item Key="authorization_endpoint">https://accounts.google.com/o/oauth2/auth</Item>
+            <Item Key="AccessTokenEndpoint">https://accounts.google.com/o/oauth2/token</Item>
+            <Item Key="ClaimsEndpoint">https://www.googleapis.com/oauth2/v1/userinfo</Item>
+            <Item Key="scope">email profile</Item>
+            <Item Key="HttpBinding">POST</Item>
+            <Item Key="UsePolicyInRedirectUri">false</Item>
+            <Item Key="client_id">{Settings:GoogleAppId}</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="client_secret" StorageReferenceId="B2C_1A_GoogleSecret" />
+          </CryptographicKeys>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="issuerUserId" PartnerClaimType="id" />
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" />
+            <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="given_name" />
+            <OutputClaim ClaimTypeReferenceId="surname" PartnerClaimType="family_name" />
+            <OutputClaim ClaimTypeReferenceId="displayName" PartnerClaimType="name" />
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="google.com" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication" />
+          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName" />
+            <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName" />
+            <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId" />
+            <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId" />
+          </OutputClaimsTransformations>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialLogin" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Local Account SignIn</DisplayName>
+      <TechnicalProfiles>
+         <TechnicalProfile Id="login-NonInteractive">
+          <Metadata>
+            <Item Key="client_id">{Settings:ProxyIdentityExperienceFrameworkAppId}</Item>
+            <Item Key="IdTokenAudience">{Settings:IdentityExperienceFrameworkAppId}</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="{Settings:ProxyIdentityExperienceFrameworkAppId}" />
+            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="{Settings:IdentityExperienceFrameworkAppId}" />
+          </InputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Azure Active Directory</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="AAD-Common">
+            <DisplayName>Azure Active Directory</DisplayName>
+            <Metadata>
+                <Item Key="ApplicationObjectId">{Settings:b2c-extensions-app-ObjectId}</Item>
+                <Item Key="ClientId">{Settings:b2c-extensions-app-ClientId}</Item>
+            </Metadata>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="AAD-UserReadUsingEmailAddress">
+          <OutputClaims>
+            <!-- Required claims -->
+            <OutputClaim ClaimTypeReferenceId="objectId" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="localAccountAuthentication" />
+            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
+
+            <!-- Optional claims -->
+            <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
+            <OutputClaim ClaimTypeReferenceId="displayName" />
+            <OutputClaim ClaimTypeReferenceId="accountEnabled" />
+            <OutputClaim ClaimTypeReferenceId="otherMails" />
+            <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
+            <OutputClaim ClaimTypeReferenceId="extension_Organization" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <!-- The following technical profile is used to read data after user authenticates. -->
+        <TechnicalProfile Id="AAD-UserReadUsingObjectId">
+          <OutputClaims>
+            <!-- Required claims -->
+            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
+
+            <!-- Optional claims -->
+            <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
+            <OutputClaim ClaimTypeReferenceId="displayName" />
+            <OutputClaim ClaimTypeReferenceId="otherMails" />
+            <OutputClaim ClaimTypeReferenceId="givenName" />
+            <OutputClaim ClaimTypeReferenceId="surname" />
+            <OutputClaim ClaimTypeReferenceId="extension_Organization" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <!-- Technical profiles for updating user record using objectId -->
+        <TechnicalProfile Id="AAD-UserWriteProfileUsingObjectId">
+          <PersistedClaims>
+            <!-- Required claims -->
+            <PersistedClaim ClaimTypeReferenceId="objectId" />
+
+            <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
+            <PersistedClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" PartnerClaimType="strongAuthenticationPhoneNumber" />
+
+            <!-- Optional claims -->
+            <PersistedClaim ClaimTypeReferenceId="givenName" />
+            <PersistedClaim ClaimTypeReferenceId="surname" />
+            <PersistedClaim ClaimTypeReferenceId="extension_Organization" />
+          </PersistedClaims>
+
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="extension_Organization" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <!-- Technical profiles for local accounts -->
+        <TechnicalProfile Id="AAD-UserWriteUsingLogonEmail">
+          <PersistedClaims>
+            <!-- Required claims -->
+            <PersistedClaim ClaimTypeReferenceId="email" PartnerClaimType="signInNames.emailAddress" />
+            <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
+            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />
+            <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration" />
+            <PersistedClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" PartnerClaimType="strongAuthenticationPhoneNumber" />
+
+            <!-- Optional claims. -->
+            <PersistedClaim ClaimTypeReferenceId="givenName" />
+            <PersistedClaim ClaimTypeReferenceId="surname" />
+            <PersistedClaim ClaimTypeReferenceId="extension_Organization" />
+          </PersistedClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="objectId" />
+            <OutputClaim ClaimTypeReferenceId="newUser" PartnerClaimType="newClaimsPrincipalCreated" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="localAccountAuthentication" />
+            <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
+            <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
+            <OutputClaim ClaimTypeReferenceId="extension_Organization" />
+          </OutputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Local Account</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="LocalAccountSignUpWithLogonEmail">
+          <DisplayName>Email signup</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="IpAddressClaimReferenceId">IpAddress</Item>
+            <Item Key="ContentDefinitionReferenceId">api.localaccountsignup</Item>
+            <!-- HACK: bypass enforce email verification for quick testing purposes, should be reverted in production -->
+            <Item Key="EnforceEmailVerification">false</Item>
+          </Metadata>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="objectId" />
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="Verified.Email" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="newPassword" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="reenterPassword" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="executed-SelfAsserted-Input" DefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" />
+            <OutputClaim ClaimTypeReferenceId="newUser" />
+
+            <!-- Optional claims, to be collected from the user -->
+            <OutputClaim ClaimTypeReferenceId="displayName" />
+            <OutputClaim ClaimTypeReferenceId="givenName" />
+            <OutputClaim ClaimTypeReferenceId="surName" />
+            <OutputClaim ClaimTypeReferenceId="extension_Organization" Required="true" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <!-- This technical profile uses a validation technical profile to authenticate the user. -->
+        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="password" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="objectId" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" />
+            <OutputClaim ClaimTypeReferenceId="extension_Organization" />
+          </OutputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Self Asserted</DisplayName>
+      <TechnicalProfiles>
+
+        <TechnicalProfile Id="SelfAsserted-ProfileUpdate">
+          <OutputClaims>
+            <!-- Required claims -->
+            <OutputClaim ClaimTypeReferenceId="executed-SelfAsserted-Input" DefaultValue="true" />
+
+            <!-- Optional claims. These claims are collected from the user and can be modified. Any claim added here should be updated in the
+                 ValidationTechnicalProfile referenced below so it can be written to directory after being updated by the user, i.e. AAD-UserWriteProfileUsingObjectId. -->
+            <OutputClaim ClaimTypeReferenceId="givenName" />
+            <OutputClaim ClaimTypeReferenceId="surname" />
+            <OutputClaim ClaimTypeReferenceId="extension_Organization" Required="true" />
+          </OutputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+  </ClaimsProviders>
+
+  <UserJourneys>
+
+    <UserJourney Id="SignUpOrSignInWithoutMFA">
+      <OrchestrationSteps>
+
+        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+          <ClaimsProviderSelections>
+            <ClaimsProviderSelection TargetClaimsExchangeId="FacebookExchange" />
+            <ClaimsProviderSelection TargetClaimsExchangeId="GoogleExchange" />
+            <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
+          </ClaimsProviderSelections>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Check if the user has selected to sign in using one of the social providers -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="FacebookExchange" TechnicalProfileReferenceId="Facebook-OAUTH" />
+            <ClaimsExchange Id="GoogleExchange" TechnicalProfileReferenceId="Google-OAuth2" />
+            <ClaimsExchange Id="SignUpWithLogonEmailExchange" TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- For social IDP authentication, attempt to find the user account in the directory. -->
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>localAccountAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadUsingAlternativeSecurityId" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId-NoError" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId).
+          This can only happen when authentication happened using a social IDP. If local account was created or authentication done
+          using ESTS in step 2, then an user account must exist in the directory by this time. -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SelfAsserted-Social" TechnicalProfileReferenceId="SelfAsserted-Social" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent
+          in the token. -->
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>socialIdpAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+        <!-- The previous step (SelfAsserted-Social) could have been skipped if there were no attributes to collect
+             from the user. So, in that case, create the user in the directory if one does not already exist
+             (verified using objectId which would be set from the last step if account was created in the directory. -->
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+
+      </OrchestrationSteps>
+      <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
+
+    <UserJourney Id="ProfileEditWithoutMFA">
+      <OrchestrationSteps>
+
+        <OrchestrationStep Order="1" Type="ClaimsProviderSelection" ContentDefinitionReferenceId="api.idpselections">
+          <ClaimsProviderSelections>
+            <ClaimsProviderSelection TargetClaimsExchangeId="FacebookExchange" />
+            <ClaimsProviderSelection TargetClaimsExchangeId="GoogleExchange" />
+            <ClaimsProviderSelection TargetClaimsExchangeId="LocalAccountSigninEmailExchange" />
+          </ClaimsProviderSelections>
+        </OrchestrationStep>
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="FacebookExchange" TechnicalProfileReferenceId="Facebook-OAUTH" />
+            <ClaimsExchange Id="GoogleExchange" TechnicalProfileReferenceId="Google-OAuth2" />
+            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>localAccountAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserRead" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>socialIdpAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="B2CUserProfileUpdateExchange" TechnicalProfileReferenceId="SelfAsserted-ProfileUpdate" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+
+      </OrchestrationSteps>
+      <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
+
+	</UserJourneys>
+
+</TrustFrameworkPolicy>
