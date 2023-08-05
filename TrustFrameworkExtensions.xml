@@ -500,7 +500,7 @@
 
     </ClaimsSchema>
 
-    <ContentDefinitions>
+    <!-- <ContentDefinitions>
 
       <ContentDefinition Id="api.idpselections">
         <LoadUri>{Settings:CustomUIIdpSelector}</LoadUri>
@@ -542,7 +542,7 @@
         <LoadUri>{Settings:CustomUISelfAsserted}</LoadUri>
       </ContentDefinition>
 
-    </ContentDefinitions>
+    </ContentDefinitions> -->
 
   </BuildingBlocks>
 
