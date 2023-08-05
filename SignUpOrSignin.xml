@@ -23,10 +23,10 @@
       <!--points to refresh token journey when app makes refresh token request-->
       <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
     </Endpoints>
-    <UserJourneyBehaviors>
+    <!-- <UserJourneyBehaviors>
       <JourneyInsights TelemetryEngine="ApplicationInsights" InstrumentationKey="{Settings:ApplicationAppInsightsInstrumentationKey}" 
       DeveloperMode="{Settings:ApplicationAppInsightsDeveloperMode}" ClientEnabled="false" ServerEnabled="true" TelemetryVersion="1.0.0" />
-    </UserJourneyBehaviors>
+    </UserJourneyBehaviors> -->
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
